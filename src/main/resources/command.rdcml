@@ -2,4 +2,9 @@ governs {
     testinv {
         hook openinv
     }
+
+    reload {
+        permission governs.reload
+        hook reload
+    }
 }

@@ -1,0 +1,2 @@
+test: &a1234 dsa
+reload: &aConfig reloaded

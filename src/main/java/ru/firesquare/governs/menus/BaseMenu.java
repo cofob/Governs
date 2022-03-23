@@ -13,12 +13,4 @@ public class BaseMenu {
         InventoryGUI gui = new InventoryGUI(Bukkit.createInventory(null, 27, "Name"));
         return gui;
     }
-
-    public InventoryGUI getInstance() {
-        return buildGui();
-    }
-
-    public Inventory getInventory() {
-        return buildGui().getInventory();
-    }
 }

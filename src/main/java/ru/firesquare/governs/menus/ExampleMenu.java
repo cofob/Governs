@@ -3,6 +3,7 @@ package ru.firesquare.governs.menus;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 
+import org.bukkit.inventory.Inventory;
 import redempt.redlib.inventorygui.InventoryGUI;
 import redempt.redlib.inventorygui.ItemButton;
 import redempt.redlib.itemutils.ItemBuilder;
@@ -18,5 +19,13 @@ public class ExampleMenu extends BaseMenu {
         gui.addButton(button, 13);
 
         return gui;
+    }
+
+    public InventoryGUI getInstance() {
+        return buildGui();
+    }
+
+    public Inventory getInventory() {
+        return buildGui().getInventory();
     }
 }
