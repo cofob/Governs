@@ -1,0 +1,5 @@
+governs {
+    testinv {
+        hook openinv
+    }
+}
