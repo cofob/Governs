@@ -2,7 +2,10 @@ package ru.firesquare.governs;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
-import ru.firesquare.governs.commands.ExampleCommand;
+import redempt.redlib.commandmanager.CommandParser;
+import redempt.redlib.dev.ChainCommand;
+import redempt.redlib.dev.StructureTool;
+import ru.firesquare.governs.commands.GovernsCommand;
 import ru.firesquare.governs.listeners.PlayerJoinListener;
 import ru.firesquare.governs.tasks.ExampleTask;
 
@@ -16,8 +19,11 @@ public class GovernsPlugin extends JavaPlugin {
         // Set static instance
         ru.firesquare.governs.GovernsPlugin.instance = this;
 
-        // Register the example command
-        this.getCommand("example").setExecutor(new ExampleCommand());
+        // Register the commands
+        ChainCommand chain = new ChainCommand();
+        new CommandParser(this.getResource("command.rdcml"))
+                .parse()
+                .register("governs", new GovernsCommand(), StructureTool.enable(), chain);
         
         // Register the example listener
         this.getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);

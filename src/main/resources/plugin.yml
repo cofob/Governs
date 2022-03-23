@@ -6,7 +6,3 @@ version: ${version}
 url: ${url}
 api-version: 1.18
 depend: [RedLib]
-commands:
-  example:
-    aliases: ["ex"]
-    description: "This is an example plugin."
