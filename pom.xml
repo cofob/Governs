@@ -2,19 +2,19 @@
     <modelVersion>4.0.0</modelVersion>
     
     <!-- Project information -->
-    <groupId>dev._2lstudios</groupId>
-    <artifactId>ExamplePlugin</artifactId>
+    <groupId>ru.firesquare</groupId>
+    <artifactId>governs</artifactId>
     <packaging>jar</packaging>
 
     <!-- Plugin Information -->
-    <name>ExamplePlugin</name>
-    <description>This is just an example plugin</description>
+    <name>Governs</name>
+    <description>Simply create governments.</description>
     <version>0.0.1</version>
-    <url>https://github.com/2lstudios-mc/bukkit-boilerplate</url>
+    <url>https://git.averyan.ru/firesquare/plugins/governs</url>
 
     <properties>
-        <author>2LStudios</author>
-        <mainClass>dev._2lstudios.example.ExamplePlugin</mainClass>
+        <author>firesquare</author>
+        <mainClass>ru.firesquare.governs.GovernsPlugin</mainClass>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
@@ -24,6 +24,11 @@
             <id>spigot-repo</id>
             <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
         </repository>
+
+        <repository>
+            <id>redempt.dev</id>
+            <url>https://redempt.dev</url>
+        </repository>
     </repositories>
 
     <!-- Dependencies imports -->
@@ -31,7 +36,14 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.18.1-R0.1-SNAPSHOT</version>
+            <version>1.18.2-R0.1-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.github.Redempt</groupId>
+            <artifactId>RedLib</artifactId>
+            <version>6.5.1.9</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
