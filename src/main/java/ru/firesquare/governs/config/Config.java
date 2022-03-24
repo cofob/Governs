@@ -12,11 +12,14 @@ public class Config {
     public static Boolean allow_quit = false;
 
     @Comment("Force players to join in some government?")
-    @Comment("Hermit players will not be able to interact with the world and go beyond spag")
+    @Comment("Hermit players will not be able to interact with the world and go beyond spawn")
     public static Boolean force_to_join = true;
 
     @Comment("Distance allowed from spawn point for hermit players. A circle. Default: 100")
     public static int hermit_allowed_distance = 100;
+
+    @Comment("Database connection")
+    public static Database database;
 
     @Comment("List of governments.")
     public static Map<String, Group> governments = new HashMap<>();

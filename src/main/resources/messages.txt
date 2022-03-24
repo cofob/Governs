@@ -1,2 +1,4 @@
 test: &a1234 dsa
 reload: &aConfig reloaded
+button_text: some text
+select_quit: &aВЕРНИСЬ СУКА НА МЕСТО

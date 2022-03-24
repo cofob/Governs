@@ -58,12 +58,19 @@
             <version>1.7</version>
             <scope>provided</scope>
         </dependency>
+
+        <dependency>
+            <groupId>com.github.Jannyboy11.GuiLib</groupId>
+            <artifactId>GuiLib-Plugin</artifactId>
+            <version>v1.11.7</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 
     <!-- Build settings -->
     <build>
         <!-- Name of your compiled artifact -->
-        <finalName>${artifactId}</finalName>
+        <finalName>${project.artifactId}</finalName>
         <!-- Directory of .java files -->
         <sourceDirectory>src/main/java</sourceDirectory>
         <!-- Clean old builds and install dependencies before compile -->
@@ -109,7 +116,7 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin>
+            </plugin><plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-compiler-plugin</artifactId><configuration><source>10</source><target>10</target></configuration></plugin>
         </plugins>
     </build>
 </project>

@@ -1,0 +1,6 @@
+CREATE TABLE IF NOT EXISTS `governs_governments` (
+    `id` INTEGER PRIMARY KEY AUTOINCREMENT,
+    `name` VARCHAR(32) NOT NULL UNIQUE,
+    `description` TEXT NOT NULL,
+    `approve` BOOLEAN NOT NULL DEFAULT 0
+);
