@@ -9,6 +9,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.List;
 import java.util.logging.Level;
 
 public class SQLManager {
@@ -42,6 +43,7 @@ public class SQLManager {
         try {
             sql.execute(readFromInputStream(GovernsPlugin.class.getResourceAsStream("/sql/init_governments.sql")));
             sql.execute(readFromInputStream(GovernsPlugin.class.getResourceAsStream("/sql/init_players.sql")));
+            sql.execute(readFromInputStream(GovernsPlugin.class.getResourceAsStream("/sql/init_pending.sql")));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -55,6 +57,27 @@ public class SQLManager {
         } catch (Exception e) {
             return false;
         }
+    }
+
+    public void createGovern(String name){
+        sql.execute("INSERT INTO `governs_governments` (name, description, approve) " +
+                             "VALUES (?, ?, ?)", name, "", true);
+    }
+
+    public void updateGovernDescription(String name, Object value){
+        sql.execute("UPDATE `governs_governments` SET description=? WHERE name=?;", value, name);
+    }
+
+    public void updateGovernApprove(String name, boolean value){
+        sql.execute("UPDATE `governs_governments` SET approve=? WHERE name=?;", value, name);
+    }
+
+    public List<String> getGovern(String name){
+        return sql.queryResultStringList("SELECT * FROM `governs_governments` WHERE name=?;", name);
+    }
+
+    public List<String> getAllGoverns(){
+        return sql.queryResultStringList("SELECT (name, description, approve) FROM `governs_governments`;");
     }
 
     private String readFromInputStream(InputStream inputStream)

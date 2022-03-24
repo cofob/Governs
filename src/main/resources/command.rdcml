@@ -8,4 +8,32 @@ governs {
         permission governs.reload
         hook reload
     }
+
+    manage {
+        permission governs.admin
+
+        set {
+            govern string:govern_name {
+                description string...:value {
+                    hook govern_set_description
+                    postarg
+                }
+
+                approve boolean:value {
+                    hook govern_set_approve
+                    postarg
+                }
+            }
+        }
+
+        create string:govern_name {
+            hook govern_create
+        }
+
+        get {
+            governs {
+                hook governs_get
+            }
+        }
+    }
 }
