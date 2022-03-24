@@ -1,6 +1,7 @@
 governs {
-    testinv {
-        hook openinv
+    join {
+        permission governs.join
+        hook join
     }
 
     reload {

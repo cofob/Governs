@@ -7,7 +7,7 @@ import redempt.redlib.region.SpheroidRegion;
 import redempt.redlib.region.events.RegionExitEvent;
 import ru.firesquare.governs.GovernsPlugin;
 import ru.firesquare.governs.config.Config;
-import ru.firesquare.governs.menus.SelectGovernMenu;
+import ru.firesquare.governs.menus.JoinGovernMenu;
 import ru.firesquare.governs.sql.SQLManager;
 
 import java.util.Objects;
@@ -22,13 +22,13 @@ public class PlayerLeaveSpawnListener implements Listener {
         new EventListener<>(GovernsPlugin.getInstance(), RegionExitEvent.class, e -> {
             if (manager.checkPlayerInSomeGovern(e.getPlayer().getName())) {
                 e.getPlayer().teleport(Objects.requireNonNull(Bukkit.getWorld("world")).getSpawnLocation());
-                e.getPlayer().openInventory(SelectGovernMenu.getInventory());
+                e.getPlayer().openInventory(JoinGovernMenu.getInventory());
             }
         });
         new EventListener<>(GovernsPlugin.getInstance(), RegionExitEvent.class, e -> {
             if (!manager.checkPlayerInSomeGovern(e.getPlayer().getName())) {
                 e.getPlayer().teleport(Objects.requireNonNull(Bukkit.getWorld("world")).getSpawnLocation());
-                e.getPlayer().openInventory(SelectGovernMenu.getInventory());
+                e.getPlayer().openInventory(JoinGovernMenu.getInventory());
             }
         });
     }

@@ -1,6 +1,5 @@
 package ru.firesquare.governs.commands;
 
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -8,15 +7,14 @@ import redempt.redlib.commandmanager.CommandHook;
 import redempt.redlib.commandmanager.Messages;
 import redempt.redlib.config.ConfigManager;
 import ru.firesquare.governs.GovernsPlugin;
-import ru.firesquare.governs.menus.SelectGovernMenu;
+import ru.firesquare.governs.menus.JoinGovernMenu;
 
 public class GovernsCommand {
-    @CommandHook("openinv")
-    public void openInv(CommandSender sender) {
-        final String message = ru.firesquare.governs.GovernsPlugin.getInstance().getConfig().getString("messages.from-command");
-        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', message));
-        Player player = Bukkit.getServer().getPlayer(sender.getName());
-        player.openInventory(SelectGovernMenu.getInventory());
+    @CommandHook("join")
+    public void joinGovern(CommandSender sender) {
+        Player player = sender.getServer().getPlayer(sender.getName());
+        assert player != null;
+        player.openInventory(JoinGovernMenu.getInventory());
     }
 
     @CommandHook("reload")

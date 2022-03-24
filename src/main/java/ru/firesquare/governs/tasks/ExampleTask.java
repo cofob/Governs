@@ -8,6 +8,6 @@ import org.bukkit.ChatColor;
 public class ExampleTask implements Runnable {
     @Override
     public void run() {
-        Bukkit.getServer().broadcastMessage(ChatColor.translateAlternateColorCodes('&', Messages.msg("test")));
+        Bukkit.getServer().broadcastMessage(ChatColor.translateAlternateColorCodes('&', Messages.msg("join_remember")));
     }
 }
