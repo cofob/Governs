@@ -1,25 +1,33 @@
 package ru.firesquare.governs;
 
+import com.j256.ormlite.dao.Dao;
+import com.j256.ormlite.dao.DaoManager;
+import com.j256.ormlite.jdbc.JdbcConnectionSource;
+import com.j256.ormlite.support.ConnectionSource;
+import com.j256.ormlite.table.TableUtils;
 import net.milkbowl.vault.permission.Permission;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 import redempt.redlib.commandmanager.CommandParser;
-import redempt.redlib.commandmanager.Messages;
 import redempt.redlib.config.ConfigManager;
 import redempt.redlib.dev.ChainCommand;
 import redempt.redlib.dev.StructureTool;
 import ru.firesquare.governs.commands.GovernsCommand;
 import ru.firesquare.governs.config.Config;
+import ru.firesquare.governs.config.Messages;
 import ru.firesquare.governs.listeners.PlayerJoinListener;
 import ru.firesquare.governs.listeners.PlayerLeaveSpawnListener;
-import ru.firesquare.governs.sql.SQLManager;
-import ru.firesquare.governs.tasks.ExampleTask;
+import ru.firesquare.governs.sql.Govern;
+import ru.firesquare.governs.sql.Player;
+
+import java.sql.SQLException;
 
 public class GovernsPlugin extends JavaPlugin {
     @Override
     public void onEnable () {
         // Load config
         ConfigManager.create(this).target(Config.class).saveDefaults().load();
+        ConfigManager.create(this, "lang.yml").target(Messages.class).saveDefaults().load();
 
         // Load messages
         reloadFileConfig();
@@ -28,8 +36,7 @@ public class GovernsPlugin extends JavaPlugin {
         GovernsPlugin.instance = this;
 
         // Load and init SQL
-        SQLManager manager = new SQLManager();
-        manager.initialize();
+        initSQL();
 
         // Register the commands
         ChainCommand chain = new ChainCommand();
@@ -45,12 +52,31 @@ public class GovernsPlugin extends JavaPlugin {
         setupPermissions();
 
         // Register the example task
-        final long taskRepeatEvery = this.getConfig().getInt("task-repeat-every") * 20L;
-        this.getServer().getScheduler().runTaskTimer(this, new ExampleTask(), taskRepeatEvery, taskRepeatEvery);
+//        final long taskRepeatEvery = this.getConfig().getInt("task-repeat-every") * 20L;
+//        this.getServer().getScheduler().runTaskTimer(this, new ExampleTask(), taskRepeatEvery, taskRepeatEvery);
     }
 
-    public void reloadFileConfig () {
-        Messages.load(this);
+    private Dao<Govern, String> governDao;
+    private Dao<Player, String> playerDao;
+
+    public void initSQL() {
+        try {
+            ConnectionSource connectionSource = new JdbcConnectionSource(Config.database);
+
+            // instantiate the dao's
+            governDao = DaoManager.createDao(connectionSource, Govern.class);
+            playerDao = DaoManager.createDao(connectionSource, Player.class);
+
+            // create tables
+            TableUtils.createTableIfNotExists(connectionSource, Govern.class);
+            TableUtils.createTableIfNotExists(connectionSource, Player.class);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void reloadFileConfig() {
+        ConfigManager.create(this, "lang.yml").target(Messages.class).saveDefaults().reload();
         ConfigManager.create(this).target(Config.class).saveDefaults().reload();
     }
 
@@ -70,5 +96,13 @@ public class GovernsPlugin extends JavaPlugin {
 
     public static ru.firesquare.governs.GovernsPlugin getInstance () {
         return ru.firesquare.governs.GovernsPlugin.instance;
+    }
+
+    public Dao<Govern, String> getGovernDao() {
+        return governDao;
+    }
+
+    public Dao<Player, String> getPlayerDao() {
+        return playerDao;
     }
 }

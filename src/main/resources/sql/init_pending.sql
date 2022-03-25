@@ -1,6 +1,0 @@
-CREATE TABLE IF NOT EXISTS `governs_pending` (
-    `id` INTEGER PRIMARY KEY AUTOINCREMENT,
-    `type` VARCHAR(32) NOT NULL,
-    `player` VARCHAR(32) NULL,
-    `value` VARCHAR(256) NOT NULL
-);

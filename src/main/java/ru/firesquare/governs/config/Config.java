@@ -3,9 +3,6 @@ package ru.firesquare.governs.config;
 import redempt.redlib.config.annotations.Comment;
 import redempt.redlib.config.annotations.ConfigMappable;
 
-import java.util.HashMap;
-import java.util.Map;
-
 @ConfigMappable
 public class Config {
     @Comment("Allow players to leave from government?")
@@ -19,8 +16,5 @@ public class Config {
     public static int hermit_allowed_distance = 100;
 
     @Comment("Database connection")
-    public static Database database;
-
-    @Comment("List of governments.")
-    public static Map<String, Group> governments = new HashMap<>();
+    public static String database = "jdbc:sqlite:plugins/Governs/database.db";
 }

@@ -8,8 +8,8 @@ import redempt.redlib.region.events.RegionExitEvent;
 import ru.firesquare.governs.GovernsPlugin;
 import ru.firesquare.governs.config.Config;
 import ru.firesquare.governs.menus.JoinGovernMenu;
-import ru.firesquare.governs.sql.SQLManager;
 
+import java.sql.SQLException;
 import java.util.Objects;
 
 public class PlayerLeaveSpawnListener implements Listener {
@@ -18,17 +18,24 @@ public class PlayerLeaveSpawnListener implements Listener {
                 Objects.requireNonNull(Bukkit.getWorld("world")).getSpawnLocation(),
                 Config.hermit_allowed_distance);
         region.enableEvents();
-        SQLManager manager = new SQLManager();
         new EventListener<>(GovernsPlugin.getInstance(), RegionExitEvent.class, e -> {
-            if (manager.checkPlayerInSomeGovern(e.getPlayer().getName())) {
-                e.getPlayer().teleport(Objects.requireNonNull(Bukkit.getWorld("world")).getSpawnLocation());
-                new JoinGovernMenu().open(e.getPlayer());
+            try {
+                if (GovernsPlugin.getInstance().getPlayerDao().queryForId(e.getPlayer().getName()).getGovern() == null) {
+                    e.getPlayer().teleport(Objects.requireNonNull(Bukkit.getWorld("world")).getSpawnLocation());
+                    JoinGovernMenu.INVENTORY.open(e.getPlayer());
+                }
+            } catch (SQLException ex) {
+                ex.printStackTrace();
             }
         });
         new EventListener<>(GovernsPlugin.getInstance(), RegionExitEvent.class, e -> {
-            if (!manager.checkPlayerInSomeGovern(e.getPlayer().getName())) {
-                e.getPlayer().teleport(Objects.requireNonNull(Bukkit.getWorld("world")).getSpawnLocation());
-                new JoinGovernMenu().open(e.getPlayer());
+            try {
+                if (GovernsPlugin.getInstance().getPlayerDao().queryForId(e.getPlayer().getName()).getGovern() == null) {
+                    e.getPlayer().teleport(Objects.requireNonNull(Bukkit.getWorld("world")).getSpawnLocation());
+                    JoinGovernMenu.INVENTORY.open(e.getPlayer());
+                }
+            } catch (SQLException ex) {
+                ex.printStackTrace();
             }
         });
     }

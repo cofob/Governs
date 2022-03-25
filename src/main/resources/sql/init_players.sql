@@ -1,5 +1,0 @@
-CREATE TABLE IF NOT EXISTS `governs_players` (
-    `id` INTEGER PRIMARY KEY AUTOINCREMENT,
-    `nickname` VARCHAR(32) NOT NULL UNIQUE,
-    `government` INTEGER NULL
-);

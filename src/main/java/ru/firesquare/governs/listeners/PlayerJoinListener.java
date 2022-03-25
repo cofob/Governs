@@ -4,19 +4,27 @@ import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+import ru.firesquare.governs.GovernsPlugin;
 import ru.firesquare.governs.menus.JoinGovernMenu;
-import ru.firesquare.governs.sql.SQLManager;
+import ru.firesquare.governs.sql.Player;
 
+import java.sql.SQLException;
 import java.util.Objects;
 
 public class PlayerJoinListener implements Listener {
     @EventHandler
     public void onPlayerJoin (PlayerJoinEvent e) {
-        SQLManager manager = new SQLManager();
-        e.getPlayer().sendMessage(String.valueOf(manager.checkPlayerInSomeGovern(e.getPlayer().getName())));
-        if (!manager.checkPlayerInSomeGovern(e.getPlayer().getName())) {
+        Player player = new Player();
+        player.setName(e.getPlayer().getName());
+        try {
+            GovernsPlugin.getInstance().getPlayerDao().createIfNotExists(player);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        if (player.getGovern() == null) {
             e.getPlayer().teleport(Objects.requireNonNull(Bukkit.getWorld("world")).getSpawnLocation());
-            new JoinGovernMenu().open(e.getPlayer());
+            JoinGovernMenu.INVENTORY.open(e.getPlayer());
         }
     }
 }
