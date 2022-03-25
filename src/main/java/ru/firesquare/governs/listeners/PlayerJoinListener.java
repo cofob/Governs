@@ -16,7 +16,7 @@ public class PlayerJoinListener implements Listener {
         e.getPlayer().sendMessage(String.valueOf(manager.checkPlayerInSomeGovern(e.getPlayer().getName())));
         if (!manager.checkPlayerInSomeGovern(e.getPlayer().getName())) {
             e.getPlayer().teleport(Objects.requireNonNull(Bukkit.getWorld("world")).getSpawnLocation());
-            e.getPlayer().openInventory(JoinGovernMenu.getInventory());
+            new JoinGovernMenu().open(e.getPlayer());
         }
     }
 }

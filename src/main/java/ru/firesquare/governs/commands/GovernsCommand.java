@@ -15,7 +15,7 @@ public class GovernsCommand {
     public void joinGovern(CommandSender sender) {
         Player player = sender.getServer().getPlayer(sender.getName());
         assert player != null;
-        player.openInventory(JoinGovernMenu.getInventory());
+        new JoinGovernMenu().open(player);
     }
 
     @CommandHook("reload")

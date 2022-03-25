@@ -22,13 +22,13 @@ public class PlayerLeaveSpawnListener implements Listener {
         new EventListener<>(GovernsPlugin.getInstance(), RegionExitEvent.class, e -> {
             if (manager.checkPlayerInSomeGovern(e.getPlayer().getName())) {
                 e.getPlayer().teleport(Objects.requireNonNull(Bukkit.getWorld("world")).getSpawnLocation());
-                e.getPlayer().openInventory(JoinGovernMenu.getInventory());
+                new JoinGovernMenu().open(e.getPlayer());
             }
         });
         new EventListener<>(GovernsPlugin.getInstance(), RegionExitEvent.class, e -> {
             if (!manager.checkPlayerInSomeGovern(e.getPlayer().getName())) {
                 e.getPlayer().teleport(Objects.requireNonNull(Bukkit.getWorld("world")).getSpawnLocation());
-                e.getPlayer().openInventory(JoinGovernMenu.getInventory());
+                new JoinGovernMenu().open(e.getPlayer());
             }
         });
     }

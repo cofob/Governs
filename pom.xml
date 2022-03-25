@@ -34,6 +34,11 @@
             <id>jitpack.io</id>
             <url>https://jitpack.io</url>
         </repository>
+
+        <repository>
+            <id>repo</id>
+            <url>https://repo.mattstudios.me/artifactory/public/</url>
+        </repository>
     </repositories>
 
     <!-- Dependencies imports -->
@@ -60,10 +65,9 @@
         </dependency>
 
         <dependency>
-            <groupId>com.github.Jannyboy11.GuiLib</groupId>
-            <artifactId>GuiLib-Plugin</artifactId>
-            <version>v1.11.7</version>
-            <scope>provided</scope>
+            <groupId>dev.triumphteam</groupId>
+            <artifactId>triumph-gui</artifactId>
+            <version>3.1.2</version>
         </dependency>
     </dependencies>
 

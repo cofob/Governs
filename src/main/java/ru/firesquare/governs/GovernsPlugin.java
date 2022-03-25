@@ -14,8 +14,6 @@ import ru.firesquare.governs.listeners.PlayerJoinListener;
 import ru.firesquare.governs.listeners.PlayerLeaveSpawnListener;
 import ru.firesquare.governs.sql.SQLManager;
 import ru.firesquare.governs.tasks.ExampleTask;
-import xyz.janboerman.guilib.GuiLibrary;
-import xyz.janboerman.guilib.api.GuiListener;
 
 public class GovernsPlugin extends JavaPlugin {
     @Override
@@ -46,10 +44,6 @@ public class GovernsPlugin extends JavaPlugin {
         // Setup Vault
         setupPermissions();
 
-        // Setup GuiLib
-        GuiLibrary guiLibrary = (GuiLibrary) getServer().getPluginManager().getPlugin("GuiLib");
-        guiListener = guiLibrary.getGuiListener();
-
         // Register the example task
         final long taskRepeatEvery = this.getConfig().getInt("task-repeat-every") * 20L;
         this.getServer().getScheduler().runTaskTimer(this, new ExampleTask(), taskRepeatEvery, taskRepeatEvery);
@@ -76,11 +70,5 @@ public class GovernsPlugin extends JavaPlugin {
 
     public static ru.firesquare.governs.GovernsPlugin getInstance () {
         return ru.firesquare.governs.GovernsPlugin.instance;
-    }
-
-    private GuiListener guiListener;
-
-    public GuiListener getGuiListener() {
-        return guiListener;
     }
 }
