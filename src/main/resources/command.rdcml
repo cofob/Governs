@@ -31,8 +31,14 @@ governs {
         }
 
         get {
+            govern string:govern_name {
+                hook govern_get
+            }
+        }
+
+        list {
             governs {
-                hook governs_get
+                hook governs_get_all
             }
         }
     }

@@ -57,6 +57,7 @@ public class GovernsPlugin extends JavaPlugin {
 
     public void reloadFileConfig () {
         Messages.load(this);
+        ConfigManager.create(this).target(Config.class).saveDefaults().reload();
     }
 
     private static Permission perms = null;

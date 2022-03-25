@@ -77,7 +77,7 @@ public class SQLManager {
     }
 
     public List<String> getAllGoverns(){
-        return sql.queryResultStringList("SELECT (name, description, approve) FROM `governs_governments`;");
+        return sql.queryResultStringList("SELECT name, description, approve FROM `governs_governments`;");
     }
 
     private String readFromInputStream(InputStream inputStream)

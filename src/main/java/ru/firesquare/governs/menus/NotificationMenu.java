@@ -20,4 +20,10 @@ public class NotificationMenu extends MenuHolder<GovernsPlugin> implements Liste
         event.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', Messages.msg(this.message)));
         super.onClose(event);
     }
+
+    @Override
+    public void onClick(InventoryCloseEvent event) {
+        event.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', Messages.msg(this.message)));
+        super.onClose(event);
+    }
 }

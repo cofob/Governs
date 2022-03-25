@@ -20,7 +20,6 @@ public class GovernsCommand {
 
     @CommandHook("reload")
     public void reloadConfig(CommandSender sender) {
-        ConfigManager.create(GovernsPlugin.getInstance()).reload();
         GovernsPlugin.getInstance().reloadFileConfig();
         sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Messages.msg("reload")));
     }
@@ -40,8 +39,18 @@ public class GovernsCommand {
         new SQLManager().createGovern(govern_name);
     }
 
-    @CommandHook("governs_get")
+    @CommandHook("governs_get_all")
     public void getAllGoverns(CommandSender sender){
         sender.sendMessage(String.valueOf(new SQLManager().getAllGoverns()));
+    }
+
+    @CommandHook("govern_get")
+    public void getGovern(CommandSender sender, String govern_name){
+        try {
+            sender.sendMessage(String.valueOf(new SQLManager().getGovern(govern_name)));
+        } catch (Exception e) {
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Messages.msg("error")) +
+                                e.getMessage().replace('\n', ' '));
+        }
     }
 }

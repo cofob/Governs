@@ -1,3 +1,4 @@
 reload: &aPlugin reloaded!
 join_quit: &aTo open select gui: /governs join
 join_remember: &aYou must join some government!
+error: &cError:
