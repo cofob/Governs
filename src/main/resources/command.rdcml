@@ -19,9 +19,36 @@ governs {
                     postarg
                 }
 
+                displayname string...:value {
+                    hook govern_set_display_name
+                    postarg
+                }
+
                 approve boolean:value {
                     hook govern_set_approve
                     postarg
+                }
+
+                icon string:value {
+                    hook govern_set_icon
+                    postarg
+                }
+
+                feature string:feature_name {
+                    description string...:value {
+                        hook govern_feat_set_description
+                        postarg
+                    }
+
+                    displayname string...:value {
+                        hook govern_feat_set_display_name
+                        postarg
+                    }
+
+                    icon string:value {
+                        hook govern_feat_set_icon
+                        postarg
+                    }
                 }
             }
         }

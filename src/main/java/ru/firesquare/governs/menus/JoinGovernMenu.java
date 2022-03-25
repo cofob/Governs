@@ -15,6 +15,7 @@ import ru.firesquare.governs.sql.Govern;
 
 import java.sql.SQLException;
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class JoinGovernMenu implements InventoryProvider {
@@ -23,7 +24,7 @@ public class JoinGovernMenu implements InventoryProvider {
             .id("JoinGovern")
             .provider(new JoinGovernMenu())
             .size(3, 9)
-            .title(ChatColor.GREEN + Messages.join_govern_title)
+            .title(ChatColor.translateAlternateColorCodes('&', Messages.join_govern_title))
             .closeable(true)
             .build();
 
@@ -34,7 +35,7 @@ public class JoinGovernMenu implements InventoryProvider {
         int i = 1;
         try {
             for (Govern govern : GovernsPlugin.getInstance().getGovernDao().queryForAll()) {
-                ItemStack item = new ItemStack(Material.RED_TERRACOTTA);
+                ItemStack item = new ItemStack(Objects.requireNonNull(Material.getMaterial(govern.getIcon())));
                 ItemMeta meta = item.getItemMeta();
                 assert meta != null;
                 meta.setDisplayName(govern.getDisplayName());

@@ -8,8 +8,10 @@ import ru.firesquare.governs.config.Messages;
 import ru.firesquare.governs.GovernsPlugin;
 import ru.firesquare.governs.menus.JoinGovernMenu;
 import ru.firesquare.governs.sql.Govern;
+import ru.firesquare.governs.sql.GovernFeature;
 
 import java.sql.SQLException;
+import java.util.Locale;
 
 public class GovernsCommand {
     @CommandHook("join")
@@ -30,6 +32,43 @@ public class GovernsCommand {
         try {
             Govern govern = GovernsPlugin.getInstance().getGovernDao().queryForId(govern_name);
             govern.setDescription(value);
+            GovernsPlugin.getInstance().getGovernDao().update(govern);
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Messages.success));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @CommandHook("govern_set_display_name")
+    public void governSetDisplayName(CommandSender sender, String govern_name, String value){
+        try {
+            Govern govern = GovernsPlugin.getInstance().getGovernDao().queryForId(govern_name);
+            govern.setDisplayName(value);
+            GovernsPlugin.getInstance().getGovernDao().update(govern);
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Messages.success));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @CommandHook("govern_feat_set_display_name")
+    public void governFeatSetDisplayName(CommandSender sender, String govern_name, String feature_name, String value){
+        try {
+            GovernFeature govern = GovernsPlugin.getInstance().getGovernFeatureDao().queryForId(govern_name);
+            govern.setDisplayName(value);
+            GovernsPlugin.getInstance().getGovernDao().update(govern);
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Messages.success));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @CommandHook("govern_set_icon")
+    public void governSetIcon(CommandSender sender, String govern_name, String value){
+        try {
+            value = value.toUpperCase(Locale.ROOT);
+            Govern govern = GovernsPlugin.getInstance().getGovernDao().queryForId(govern_name);
+            govern.setIcon(value);
             GovernsPlugin.getInstance().getGovernDao().update(govern);
             sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Messages.success));
         } catch (SQLException e) {

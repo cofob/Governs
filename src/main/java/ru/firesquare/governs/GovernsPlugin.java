@@ -18,6 +18,7 @@ import ru.firesquare.governs.config.Messages;
 import ru.firesquare.governs.listeners.PlayerJoinListener;
 import ru.firesquare.governs.listeners.PlayerLeaveSpawnListener;
 import ru.firesquare.governs.sql.Govern;
+import ru.firesquare.governs.sql.GovernFeature;
 import ru.firesquare.governs.sql.Player;
 
 import java.sql.SQLException;
@@ -57,6 +58,7 @@ public class GovernsPlugin extends JavaPlugin {
     }
 
     private Dao<Govern, String> governDao;
+    private Dao<GovernFeature, String> governFeatureDao;
     private Dao<Player, String> playerDao;
 
     public void initSQL() {
@@ -65,10 +67,12 @@ public class GovernsPlugin extends JavaPlugin {
 
             // instantiate the dao's
             governDao = DaoManager.createDao(connectionSource, Govern.class);
+            governFeatureDao = DaoManager.createDao(connectionSource, GovernFeature.class);
             playerDao = DaoManager.createDao(connectionSource, Player.class);
 
             // create tables
             TableUtils.createTableIfNotExists(connectionSource, Govern.class);
+            TableUtils.createTableIfNotExists(connectionSource, GovernFeature.class);
             TableUtils.createTableIfNotExists(connectionSource, Player.class);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -104,5 +108,9 @@ public class GovernsPlugin extends JavaPlugin {
 
     public Dao<Player, String> getPlayerDao() {
         return playerDao;
+    }
+
+    public Dao<GovernFeature, String> getGovernFeatureDao() {
+        return governFeatureDao;
     }
 }

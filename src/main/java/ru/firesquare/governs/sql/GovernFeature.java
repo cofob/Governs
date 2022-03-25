@@ -3,10 +3,13 @@ package ru.firesquare.governs.sql;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
-@DatabaseTable(tableName = "governs_governs")
-public class Govern {
-    @DatabaseField(canBeNull = false, id = true)
+@DatabaseTable(tableName = "governs_govern_features")
+public class GovernFeature {
+    @DatabaseField(id = true)
     private String name;
+
+    @DatabaseField()
+    private String govern;
 
     @DatabaseField(canBeNull = false)
     private String display_name;
@@ -17,19 +20,8 @@ public class Govern {
     @DatabaseField(canBeNull = false, defaultValue = "CARROT")
     private String icon = "CARROT";
 
-    @DatabaseField
-    private boolean approve = false;
-
 //    ORMLite boilerplate
-    public Govern() {}
-
-    public String getDisplayName() {
-        return display_name;
-    }
-
-    public void setDisplayName(String display_name) {
-        this.display_name = display_name;
-    }
+    public GovernFeature() {}
 
     public String getName() {
         return name;
@@ -37,6 +29,22 @@ public class Govern {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getGovern() {
+        return govern;
+    }
+
+    public void setGovern(String govern) {
+        this.govern = govern;
+    }
+
+    public String getDisplayName() {
+        return display_name;
+    }
+
+    public void setDisplayName(String display_name) {
+        this.display_name = name;
     }
 
     public String getDescription() {
@@ -53,13 +61,5 @@ public class Govern {
 
     public void setIcon(String icon) {
         this.icon = icon;
-    }
-
-    public boolean isApprove() {
-        return approve;
-    }
-
-    public void setApprove(boolean approve) {
-        this.approve = approve;
     }
 }
