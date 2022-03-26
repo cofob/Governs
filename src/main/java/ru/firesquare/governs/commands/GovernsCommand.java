@@ -306,7 +306,11 @@ public class GovernsCommand {
             where.eq("govern", govern_name);
             PreparedQuery<GovernFeature> preparedQuery = qb.prepare();
             List<GovernFeature> govern_feats = GovernsPlugin.getInstance().getGovernFeatureDao().query(preparedQuery);
-            sender.sendMessage(String.valueOf(govern_feats));
+            StringBuilder out = new StringBuilder();
+            for (GovernFeature feat : govern_feats) {
+                out.append(feat.getName()).append(" ");
+            }
+            sender.sendMessage("List: " + out);
         } catch (SQLException e) {
             e.printStackTrace();
             sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Messages.error) +
@@ -316,8 +320,12 @@ public class GovernsCommand {
 
     @CommandHook("governs_get_all")
     public void getAllGoverns(CommandSender sender){
+        StringBuilder out = new StringBuilder();
         try {
-            sender.sendMessage(String.valueOf(GovernsPlugin.getInstance().getGovernDao().queryForAll()));
+            for (Govern govern : GovernsPlugin.getInstance().getGovernDao().queryForAll()) {
+                out.append(govern.getName()).append(" ");
+            }
+            sender.sendMessage("List: " + out);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -326,10 +334,54 @@ public class GovernsCommand {
     @CommandHook("govern_get")
     public void getGovern(CommandSender sender, String govern_name){
         try {
-            sender.sendMessage(GovernsPlugin.getInstance().getGovernDao().queryForId(govern_name).getName());
+            Govern govern = GovernsPlugin.getInstance().getGovernDao().queryForId(govern_name);
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Messages.govern_info)
+                    .replaceAll("%name%", govern.getName())
+                    .replaceAll("%display_name%", govern.getDisplayName())
+                    .replaceAll("%description%", govern.getDescription())
+                    .replaceAll("%x%", String.valueOf(govern.getBaseX()))
+                    .replaceAll("%y%", String.valueOf(govern.getBaseY()))
+                    .replaceAll("%z%", String.valueOf(govern.getBaseZ()))
+                    .replaceAll("%icon%", govern.getIcon())
+                    .replaceAll("%approve%", String.valueOf(govern.isApprove())));
         } catch (Exception e) {
             sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Messages.error) +
                                 e.getMessage().replace('\n', ' '));
+        }
+    }
+
+    @CommandHook("govern_feat_get")
+    public void getGovernFeat(CommandSender sender, String govern_name, String feature_name){
+        try {
+            QueryBuilder<GovernFeature, String> qb = GovernsPlugin.getInstance().getGovernFeatureDao().queryBuilder();
+            Where<GovernFeature, String> where = qb.where();
+            where.eq("govern", govern_name);
+            where.and();
+            where.eq("name", feature_name);
+            PreparedQuery<GovernFeature> preparedQuery = qb.prepare();
+            GovernFeature govern = GovernsPlugin.getInstance().getGovernFeatureDao().queryForFirst(preparedQuery);
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Messages.feature_info)
+                    .replaceAll("%name%", govern.getName())
+                    .replaceAll("%display_name%", govern.getDisplayName())
+                    .replaceAll("%description%", govern.getDescription())
+                    .replaceAll("%govern%", String.valueOf(govern.getGovern()))
+                    .replaceAll("%icon%", govern.getIcon()));
+        } catch (Exception e) {
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Messages.error) +
+                    e.getMessage().replace('\n', ' '));
+        }
+    }
+
+    @CommandHook("player_get")
+    public void getPlayer(CommandSender sender, Player player){
+        try {
+            ru.firesquare.governs.sql.Player player1 = GovernsPlugin.getInstance().getPlayerDao().queryForId(player.getName());
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Messages.player_info)
+                    .replaceAll("%nickname%", player.getName())
+                    .replaceAll("%govern%", player1.getGovern()));
+        } catch (Exception e) {
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Messages.error) +
+                    e.getMessage().replace('\n', ' '));
         }
     }
 }

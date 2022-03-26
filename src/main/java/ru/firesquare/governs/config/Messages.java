@@ -25,4 +25,20 @@ public class Messages {
     public static int joined_stay = 50;
     public static int joined_fade_out = 20;
     public static String already_in_govern = "Error: Already in govern!";
+    public static String govern_info = "&a= Govern info =\n" +
+            "Name: %name%\n" +
+            "Display Name: %display_name%\n" +
+            "Description: %description%\n" +
+            "Base coords: %x% %y% %x%\n" +
+            "Icon: %icon%\n" +
+            "Approve: %approve%";
+    public static String player_info = "&a= Player info =\n" +
+            "Nickname: %nickname%\n" +
+            "Govern: %govern%";
+    public static String feature_info = "&a= Feature info =\n" +
+            "Name: %name%\n" +
+            "Govern: %govern%\n" +
+            "Display Name: %display_name%\n" +
+            "Description: %description%\n" +
+            "Icon: %icon%";
 }

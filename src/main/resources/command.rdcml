@@ -94,6 +94,14 @@ governs {
             govern string:govern_name {
                 hook govern_get
             }
+
+            govern_feat string:govern_name string:feature_name {
+                hook govern_feat_get
+            }
+
+            player player:player {
+                hook player_get
+            }
         }
 
         list {
