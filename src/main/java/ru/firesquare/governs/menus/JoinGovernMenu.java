@@ -12,6 +12,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import ru.firesquare.governs.GovernsPlugin;
 import ru.firesquare.governs.config.Messages;
 import ru.firesquare.governs.sql.Govern;
+import ru.firesquare.governs.utils.ChatUtils;
 
 import java.sql.SQLException;
 import java.util.Arrays;
@@ -24,7 +25,7 @@ public class JoinGovernMenu implements InventoryProvider {
             .id("JoinGovern")
             .provider(new JoinGovernMenu())
             .size(3, 9)
-            .title(ChatColor.translateAlternateColorCodes('&', Messages.join_govern_gui_title))
+            .title(ChatUtils.translate(Messages.join_govern_gui_title))
             .closeable(true)
             .build();
 
@@ -40,7 +41,7 @@ public class JoinGovernMenu implements InventoryProvider {
                 assert meta != null;
                 meta.setDisplayName(govern.getDisplayName());
                 meta.setLore(Arrays.stream(govern.getDescription().split("%n"))
-                        .map(e -> ChatColor.translateAlternateColorCodes('&', e)).collect( Collectors.toList() ));
+                        .map(e -> ChatUtils.translate(e)).collect( Collectors.toList() ));
                 item.setItemMeta(meta);
                 contents.set(1, i, ClickableItem.of(item, e -> GovernFeatsMenu.build(govern.getName()).open(player)));
                 i += 1;

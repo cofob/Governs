@@ -7,8 +7,9 @@ import fr.minuskube.inv.ClickableItem;
 import fr.minuskube.inv.SmartInventory;
 import fr.minuskube.inv.content.InventoryContents;
 import fr.minuskube.inv.content.InventoryProvider;
+import net.luckperms.api.model.user.User;
+import net.luckperms.api.node.Node;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -18,6 +19,7 @@ import ru.firesquare.governs.GovernsPlugin;
 import ru.firesquare.governs.config.Messages;
 import ru.firesquare.governs.sql.Govern;
 import ru.firesquare.governs.sql.GovernFeature;
+import ru.firesquare.governs.utils.ChatUtils;
 
 import java.sql.SQLException;
 import java.util.Arrays;
@@ -32,7 +34,7 @@ public class GovernFeatsMenu implements InventoryProvider {
         return SmartInventory.builder()
                 .provider(new GovernFeatsMenu(govern_name))
                 .size(3, 9)
-                .title(ChatColor.translateAlternateColorCodes('&', Messages.join_govern_title))
+                .title(ChatUtils.translate(Messages.join_govern_title))
                 .closeable(true)
                 .build();
     }
@@ -71,7 +73,7 @@ public class GovernFeatsMenu implements InventoryProvider {
             assert meta != null;
             meta.setDisplayName(feat.getDisplayName());
             meta.setLore(Arrays.stream(feat.getDescription().split("%n"))
-                    .map(e -> ChatColor.translateAlternateColorCodes('&', e)).collect( Collectors.toList() ));
+                    .map(ChatUtils::translate).collect( Collectors.toList() ));
             item.setItemMeta(meta);
             contents.set(feat.getY(), feat.getX(), ClickableItem.of(item, e -> player.closeInventory()));
         }
@@ -81,7 +83,7 @@ public class GovernFeatsMenu implements InventoryProvider {
         ItemStack item = new ItemStack(Objects.requireNonNull(Material.getMaterial(Messages.join_button_item)));
         ItemMeta meta = item.getItemMeta();
         assert meta != null;
-        meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', Messages.join_button));
+        meta.setDisplayName(ChatUtils.translate(Messages.join_button));
         item.setItemMeta(meta);
         contents.set(2, 7, ClickableItem.of(item, e -> {
             ru.firesquare.governs.sql.Player player1;
@@ -89,15 +91,19 @@ public class GovernFeatsMenu implements InventoryProvider {
                 player1 = GovernsPlugin.getInstance().getPlayerDao().queryForId(player.getName());
                 player1.setGovern(govern_name);
                 GovernsPlugin.getInstance().getPlayerDao().update(player1);
+                User user = GovernsPlugin.getLuckPerms().getPlayerAdapter(Player.class).getUser(player);
+                user.data().add(Node.builder("group." + govern_name + "-citizen").build());
+                GovernsPlugin.getLuckPerms().getUserManager().saveUser(user);
+
                 player.closeInventory();
                 player.teleport(new Location(Bukkit.getWorld("world"), govern.getBaseX(), govern.getBaseY(), govern.getBaseZ()));
                 player.setBedSpawnLocation(new Location(Bukkit.getWorld("world"), govern.getBaseX(), govern.getBaseY(), govern.getBaseZ()));
-                player.sendTitle(ChatColor.translateAlternateColorCodes('&', Messages.joined_title),
-                        ChatColor.translateAlternateColorCodes('&', Messages.joined_subtitle),
+                player.sendTitle(ChatUtils.translate(Messages.joined_title),
+                        ChatUtils.translate(Messages.joined_subtitle),
                         Messages.joined_fade_in, Messages.joined_stay, Messages.joined_fade_out);
             } catch (SQLException ex) {
                 ex.printStackTrace();
-                player.sendMessage(ChatColor.translateAlternateColorCodes('&', Messages.error + "Failed to join!"));
+                player.sendMessage(ChatUtils.translate(Messages.error + "Failed to join!"));
                 player.closeInventory();
             }
         }));
@@ -106,7 +112,7 @@ public class GovernFeatsMenu implements InventoryProvider {
         item = new ItemStack(Objects.requireNonNull(Material.getMaterial(Messages.back_button_item)));
         meta = item.getItemMeta();
         assert meta != null;
-        meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', Messages.back_button));
+        meta.setDisplayName(ChatUtils.translate(Messages.back_button));
         item.setItemMeta(meta);
         contents.set(2, 6, ClickableItem.of(item, e -> JoinGovernMenu.INVENTORY.open(player)));
     }

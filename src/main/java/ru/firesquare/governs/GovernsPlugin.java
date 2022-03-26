@@ -5,6 +5,7 @@ import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.jdbc.JdbcConnectionSource;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
+import net.luckperms.api.LuckPerms;
 import net.milkbowl.vault.permission.Permission;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.RegisteredServiceProvider;
@@ -55,6 +56,12 @@ public class GovernsPlugin extends JavaPlugin {
         // Setup Vault
         setupPermissions();
 
+        // Setup LuckPerms
+        RegisteredServiceProvider<LuckPerms> provider = Bukkit.getServicesManager().getRegistration(LuckPerms.class);
+        if (provider != null) {
+            luckPerms = provider.getProvider();
+        }
+
         // Register tasks
         final long taskRepeatEvery = Messages.join_remember_retry_every * 20L;
         this.getServer().getScheduler().runTaskTimer(this, new RememberJoinGovernTask(), taskRepeatEvery, taskRepeatEvery);
@@ -102,6 +109,12 @@ public class GovernsPlugin extends JavaPlugin {
 
     public static Permission getPermissions() {
         return perms;
+    }
+
+    private static LuckPerms luckPerms;
+
+    public static LuckPerms getLuckPerms() {
+        return luckPerms;
     }
 
     private static ru.firesquare.governs.GovernsPlugin instance;

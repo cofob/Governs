@@ -113,6 +113,10 @@ governs {
                 hook govern_feat_get_all
             }
         }
+
+        kick player:player {
+            hook player_kick
+        }
     }
 }
 

@@ -5,6 +5,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import ru.firesquare.governs.GovernsPlugin;
 import ru.firesquare.governs.config.Messages;
+import ru.firesquare.governs.utils.ChatUtils;
 
 import java.sql.SQLException;
 import java.util.Collection;
@@ -23,7 +24,7 @@ public class RememberJoinGovernTask implements Runnable {
             }
 
             if(player_db.getGovern() == null) {
-                player.sendMessage(ChatColor.translateAlternateColorCodes('&', Messages.join_remember));
+                player.sendMessage(ChatUtils.translate(Messages.join_remember));
             }
         }
     }

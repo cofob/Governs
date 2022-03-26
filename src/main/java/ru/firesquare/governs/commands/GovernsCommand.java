@@ -13,6 +13,7 @@ import ru.firesquare.governs.GovernsPlugin;
 import ru.firesquare.governs.menus.JoinGovernMenu;
 import ru.firesquare.governs.sql.Govern;
 import ru.firesquare.governs.sql.GovernFeature;
+import ru.firesquare.governs.utils.ChatUtils;
 
 import java.sql.SQLException;
 import java.util.Collection;
@@ -27,7 +28,7 @@ public class GovernsCommand {
         assert player != null;
         try {
             if (GovernsPlugin.getInstance().getPlayerDao().queryForId(player.getName()).getGovern() != null) {
-                player.sendMessage(ChatColor.translateAlternateColorCodes('&', Messages.already_in_govern));
+                player.sendMessage(ChatUtils.translate(Messages.already_in_govern));
                 return;
             }
         } catch (SQLException e) {
@@ -39,7 +40,7 @@ public class GovernsCommand {
     @CommandHook("reload")
     public void reloadConfig(CommandSender sender) {
         GovernsPlugin.getInstance().reloadFileConfig();
-        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Messages.reload));
+        sender.sendMessage(ChatUtils.translate(Messages.reload));
     }
 
     @CommandHook("govern_set_description")
@@ -48,10 +49,10 @@ public class GovernsCommand {
             Govern govern = GovernsPlugin.getInstance().getGovernDao().queryForId(govern_name);
             govern.setDescription(value);
             GovernsPlugin.getInstance().getGovernDao().update(govern);
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Messages.success));
+            sender.sendMessage(ChatUtils.translate(Messages.success));
         } catch (SQLException e) {
             e.printStackTrace();
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Messages.error) +
+            sender.sendMessage(ChatUtils.translate(Messages.error) +
                     e.getMessage().replace('\n', ' '));
         }
     }
@@ -62,10 +63,10 @@ public class GovernsCommand {
             Govern govern = GovernsPlugin.getInstance().getGovernDao().queryForId(govern_name);
             govern.setDisplayName(value);
             GovernsPlugin.getInstance().getGovernDao().update(govern);
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Messages.success));
+            sender.sendMessage(ChatUtils.translate(Messages.success));
         } catch (SQLException e) {
             e.printStackTrace();
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Messages.error) +
+            sender.sendMessage(ChatUtils.translate(Messages.error) +
                     e.getMessage().replace('\n', ' '));
         }
     }
@@ -82,10 +83,10 @@ public class GovernsCommand {
             GovernFeature govern = GovernsPlugin.getInstance().getGovernFeatureDao().queryForFirst(preparedQuery);
             govern.setDisplayName(value);
             GovernsPlugin.getInstance().getGovernFeatureDao().update(govern);
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Messages.success));
+            sender.sendMessage(ChatUtils.translate(Messages.success));
         } catch (SQLException e) {
             e.printStackTrace();
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Messages.error) +
+            sender.sendMessage(ChatUtils.translate(Messages.error) +
                     e.getMessage().replace('\n', ' '));
         }
     }
@@ -102,10 +103,10 @@ public class GovernsCommand {
             GovernFeature govern = GovernsPlugin.getInstance().getGovernFeatureDao().queryForFirst(preparedQuery);
             govern.setDescription(value);
             GovernsPlugin.getInstance().getGovernFeatureDao().update(govern);
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Messages.success));
+            sender.sendMessage(ChatUtils.translate(Messages.success));
         } catch (SQLException e) {
             e.printStackTrace();
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Messages.error) +
+            sender.sendMessage(ChatUtils.translate(Messages.error) +
                     e.getMessage().replace('\n', ' '));
         }
     }
@@ -122,10 +123,10 @@ public class GovernsCommand {
             GovernFeature govern = GovernsPlugin.getInstance().getGovernFeatureDao().queryForFirst(preparedQuery);
             govern.setIcon(value);
             GovernsPlugin.getInstance().getGovernFeatureDao().update(govern);
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Messages.success));
+            sender.sendMessage(ChatUtils.translate(Messages.success));
         } catch (SQLException e) {
             e.printStackTrace();
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Messages.error) +
+            sender.sendMessage(ChatUtils.translate(Messages.error) +
                     e.getMessage().replace('\n', ' '));
         }
     }
@@ -142,10 +143,10 @@ public class GovernsCommand {
             GovernFeature govern = GovernsPlugin.getInstance().getGovernFeatureDao().queryForFirst(preparedQuery);
             govern.setX(value);
             GovernsPlugin.getInstance().getGovernFeatureDao().update(govern);
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Messages.success));
+            sender.sendMessage(ChatUtils.translate(Messages.success));
         } catch (SQLException e) {
             e.printStackTrace();
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Messages.error) +
+            sender.sendMessage(ChatUtils.translate(Messages.error) +
                     e.getMessage().replace('\n', ' '));
         }
     }
@@ -162,10 +163,10 @@ public class GovernsCommand {
             GovernFeature govern = GovernsPlugin.getInstance().getGovernFeatureDao().queryForFirst(preparedQuery);
             govern.setY(value);
             GovernsPlugin.getInstance().getGovernFeatureDao().update(govern);
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Messages.success));
+            sender.sendMessage(ChatUtils.translate(Messages.success));
         } catch (SQLException e) {
             e.printStackTrace();
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Messages.error) +
+            sender.sendMessage(ChatUtils.translate(Messages.error) +
                     e.getMessage().replace('\n', ' '));
         }
     }
@@ -177,10 +178,10 @@ public class GovernsCommand {
             Govern govern = GovernsPlugin.getInstance().getGovernDao().queryForId(govern_name);
             govern.setIcon(value);
             GovernsPlugin.getInstance().getGovernDao().update(govern);
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Messages.success));
+            sender.sendMessage(ChatUtils.translate(Messages.success));
         } catch (SQLException e) {
             e.printStackTrace();
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Messages.error) +
+            sender.sendMessage(ChatUtils.translate(Messages.error) +
                     e.getMessage().replace('\n', ' '));
         }
     }
@@ -191,10 +192,10 @@ public class GovernsCommand {
             Govern govern = GovernsPlugin.getInstance().getGovernDao().queryForId(govern_name);
             govern.setApprove(value);
             GovernsPlugin.getInstance().getGovernDao().update(govern);
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Messages.success));
+            sender.sendMessage(ChatUtils.translate(Messages.success));
         } catch (SQLException e) {
             e.printStackTrace();
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Messages.error) +
+            sender.sendMessage(ChatUtils.translate(Messages.error) +
                     e.getMessage().replace('\n', ' '));
         }
     }
@@ -207,10 +208,10 @@ public class GovernsCommand {
             govern.setBaseY(y);
             govern.setBaseZ(z);
             GovernsPlugin.getInstance().getGovernDao().update(govern);
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Messages.success));
+            sender.sendMessage(ChatUtils.translate(Messages.success));
         } catch (SQLException e) {
             e.printStackTrace();
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Messages.error) +
+            sender.sendMessage(ChatUtils.translate(Messages.error) +
                     e.getMessage().replace('\n', ' '));
         }
     }
@@ -228,10 +229,10 @@ public class GovernsCommand {
         govern.setBaseZ(0);
         try {
             GovernsPlugin.getInstance().getGovernDao().create(govern);
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Messages.success));
+            sender.sendMessage(ChatUtils.translate(Messages.success));
         } catch (SQLException e) {
             e.printStackTrace();
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Messages.error) +
+            sender.sendMessage(ChatUtils.translate(Messages.error) +
                     e.getMessage().replace('\n', ' '));
         }
     }
@@ -246,10 +247,10 @@ public class GovernsCommand {
             List<GovernFeature> feats = GovernsPlugin.getInstance().getGovernFeatureDao().query(preparedQuery);
             GovernsPlugin.getInstance().getGovernDao().deleteById(govern_name);
             GovernsPlugin.getInstance().getGovernFeatureDao().delete(feats);
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Messages.success));
+            sender.sendMessage(ChatUtils.translate(Messages.success));
         } catch (SQLException e) {
             e.printStackTrace();
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Messages.error) +
+            sender.sendMessage(ChatUtils.translate(Messages.error) +
                     e.getMessage().replace('\n', ' '));
         }
     }
@@ -260,7 +261,7 @@ public class GovernsCommand {
             assert GovernsPlugin.getInstance().getGovernDao().queryForId(govern_name) != null;
         } catch (SQLException e) {
             e.printStackTrace();
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Messages.error) +
+            sender.sendMessage(ChatUtils.translate(Messages.error) +
                     e.getMessage().replace('\n', ' '));
             return;
         }
@@ -274,10 +275,10 @@ public class GovernsCommand {
         govern.setY(1);
         try {
             GovernsPlugin.getInstance().getGovernFeatureDao().create(govern);
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Messages.success));
+            sender.sendMessage(ChatUtils.translate(Messages.success));
         } catch (SQLException e) {
             e.printStackTrace();
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Messages.error) +
+            sender.sendMessage(ChatUtils.translate(Messages.error) +
                     e.getMessage().replace('\n', ' '));
         }
     }
@@ -293,10 +294,10 @@ public class GovernsCommand {
             PreparedQuery<GovernFeature> preparedQuery = qb.prepare();
             GovernFeature govern = GovernsPlugin.getInstance().getGovernFeatureDao().queryForFirst(preparedQuery);
             GovernsPlugin.getInstance().getGovernFeatureDao().delete(govern);
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Messages.success));
+            sender.sendMessage(ChatUtils.translate(Messages.success));
         } catch (SQLException e) {
             e.printStackTrace();
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Messages.error) +
+            sender.sendMessage(ChatUtils.translate(Messages.error) +
                     e.getMessage().replace('\n', ' '));
         }
     }
@@ -316,7 +317,7 @@ public class GovernsCommand {
             sender.sendMessage("List: " + out);
         } catch (SQLException e) {
             e.printStackTrace();
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Messages.error) +
+            sender.sendMessage(ChatUtils.translate(Messages.error) +
                     e.getMessage().replace('\n', ' '));
         }
     }
@@ -338,7 +339,7 @@ public class GovernsCommand {
     public void getGovern(CommandSender sender, String govern_name){
         try {
             Govern govern = GovernsPlugin.getInstance().getGovernDao().queryForId(govern_name);
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Messages.govern_info)
+            sender.sendMessage(ChatUtils.translate(Messages.govern_info)
                     .replaceAll("%name%", govern.getName())
                     .replaceAll("%display_name%", govern.getDisplayName())
                     .replaceAll("%description%", govern.getDescription())
@@ -348,7 +349,7 @@ public class GovernsCommand {
                     .replaceAll("%icon%", govern.getIcon())
                     .replaceAll("%approve%", String.valueOf(govern.isApprove())));
         } catch (Exception e) {
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Messages.error) +
+            sender.sendMessage(ChatUtils.translate(Messages.error) +
                                 e.getMessage().replace('\n', ' '));
         }
     }
@@ -363,14 +364,14 @@ public class GovernsCommand {
             where.eq("name", feature_name);
             PreparedQuery<GovernFeature> preparedQuery = qb.prepare();
             GovernFeature govern = GovernsPlugin.getInstance().getGovernFeatureDao().queryForFirst(preparedQuery);
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Messages.feature_info)
+            sender.sendMessage(ChatUtils.translate(Messages.feature_info)
                     .replaceAll("%name%", govern.getName())
                     .replaceAll("%display_name%", govern.getDisplayName())
                     .replaceAll("%description%", govern.getDescription())
                     .replaceAll("%govern%", String.valueOf(govern.getGovern()))
                     .replaceAll("%icon%", govern.getIcon()));
         } catch (Exception e) {
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Messages.error) +
+            sender.sendMessage(ChatUtils.translate(Messages.error) +
                     e.getMessage().replace('\n', ' '));
         }
     }
@@ -379,11 +380,23 @@ public class GovernsCommand {
     public void getPlayer(CommandSender sender, Player player){
         try {
             ru.firesquare.governs.sql.Player player1 = GovernsPlugin.getInstance().getPlayerDao().queryForId(player.getName());
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Messages.player_info)
+            sender.sendMessage(ChatUtils.translate(Messages.player_info)
                     .replaceAll("%nickname%", player.getName())
                     .replaceAll("%govern%", player1.getGovern()));
         } catch (Exception e) {
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Messages.error) +
+            sender.sendMessage(ChatUtils.translate(Messages.error) +
+                    e.getMessage().replace('\n', ' '));
+        }
+    }
+
+    @CommandHook("player_kick")
+    public void kickPlayer(CommandSender sender, Player player){
+        try {
+            ru.firesquare.governs.sql.Player player1 = GovernsPlugin.getInstance().getPlayerDao().queryForId(player.getName());
+            player1.setGovern(null);
+            GovernsPlugin.getInstance().getPlayerDao().update(player1);
+        } catch (Exception e) {
+            sender.sendMessage(ChatUtils.translate(Messages.error) +
                     e.getMessage().replace('\n', ' '));
         }
     }
@@ -400,7 +413,7 @@ public class GovernsCommand {
             return;
         }
 
-        String rendered_message = ChatColor.translateAlternateColorCodes('&', Messages.clan_chat)
+        String rendered_message = ChatUtils.translate(Messages.clan_chat)
                 .replaceAll("%govern%", sender_db.getGovern())
                 .replaceAll("%player%", sender.getName())
                 .replaceAll("%message%", message);

@@ -9,6 +9,7 @@ import ru.firesquare.governs.GovernsPlugin;
 import ru.firesquare.governs.config.Messages;
 import ru.firesquare.governs.menus.JoinGovernMenu;
 import ru.firesquare.governs.sql.Player;
+import ru.firesquare.governs.utils.ChatUtils;
 
 import java.sql.SQLException;
 import java.util.Objects;
@@ -33,8 +34,8 @@ public class PlayerJoinListener implements Listener {
         if (player.getGovern() == null) {
             e.getPlayer().teleport(Objects.requireNonNull(Bukkit.getWorld("world")).getSpawnLocation());
             e.getPlayer().setBedSpawnLocation(Objects.requireNonNull(Bukkit.getWorld("world")).getSpawnLocation());
-            e.getPlayer().sendTitle(ChatColor.translateAlternateColorCodes('&', Messages.join_govern_title),
-                    ChatColor.translateAlternateColorCodes('&', Messages.join_govern_subtitle),
+            e.getPlayer().sendTitle(ChatUtils.translate(Messages.join_govern_title),
+                    ChatUtils.translate(Messages.join_govern_subtitle),
                     Messages.join_govern_fade_in, Messages.join_govern_stay, Messages.join_govern_fade_out);
         }
     }

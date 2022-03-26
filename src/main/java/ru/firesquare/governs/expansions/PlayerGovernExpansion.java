@@ -7,6 +7,7 @@ import org.jetbrains.annotations.NotNull;
 import ru.firesquare.governs.GovernsPlugin;
 import ru.firesquare.governs.sql.Govern;
 import ru.firesquare.governs.sql.Player;
+import ru.firesquare.governs.utils.ChatUtils;
 
 import java.sql.SQLException;
 
@@ -40,7 +41,7 @@ public class PlayerGovernExpansion extends PlaceholderExpansion {
                 e.printStackTrace();
                 return null;
             }
-            return player_db.getGovern() == null ? null : ChatColor.translateAlternateColorCodes('&', govern.getDisplayName()); // "name" requires the player to be valid
+            return player_db.getGovern() == null ? null : ChatUtils.translate(govern.getDisplayName()); // "name" requires the player to be valid
         }
 
         return null;
