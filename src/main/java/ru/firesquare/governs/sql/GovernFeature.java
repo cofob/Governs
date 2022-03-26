@@ -2,6 +2,9 @@ package ru.firesquare.governs.sql;
 
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
+import org.bukkit.Material;
+
+import java.util.Locale;
 
 @DatabaseTable(tableName = "governs_govern_features")
 public class GovernFeature {
@@ -19,6 +22,12 @@ public class GovernFeature {
 
     @DatabaseField(canBeNull = false, defaultValue = "CARROT")
     private String icon = "CARROT";
+
+    @DatabaseField(canBeNull = false, defaultValue = "1")
+    private int x = 1;
+
+    @DatabaseField(canBeNull = false, defaultValue = "1")
+    private int y = 1;
 
 //    ORMLite boilerplate
     public GovernFeature() {}
@@ -60,6 +69,24 @@ public class GovernFeature {
     }
 
     public void setIcon(String icon) {
+        icon = icon.toUpperCase(Locale.ROOT);
+        assert Material.getMaterial(icon) != null;
         this.icon = icon;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setY(int y) {
+        this.y = y;
     }
 }

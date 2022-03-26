@@ -2,6 +2,9 @@ package ru.firesquare.governs.sql;
 
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
+import org.bukkit.Material;
+
+import java.util.Locale;
 
 @DatabaseTable(tableName = "governs_governs")
 public class Govern {
@@ -52,6 +55,8 @@ public class Govern {
     }
 
     public void setIcon(String icon) {
+        icon = icon.toUpperCase(Locale.ROOT);
+        assert Material.getMaterial(icon) != null;
         this.icon = icon;
     }
 

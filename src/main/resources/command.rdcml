@@ -35,6 +35,8 @@ governs {
                 }
 
                 feature string:feature_name {
+                    postarg
+
                     description string...:value {
                         hook govern_feat_set_description
                         postarg
@@ -49,12 +51,38 @@ governs {
                         hook govern_feat_set_icon
                         postarg
                     }
+
+                    x int:value {
+                        hook govern_feat_set_x
+                        postarg
+                    }
+
+                    y int:value {
+                        hook govern_feat_set_y
+                        postarg
+                    }
                 }
             }
         }
 
-        create string:govern_name {
-            hook govern_create
+        create {
+            govern string:govern_name {
+                hook govern_create
+            }
+
+            govern_feature string:govern_name string:feature_name {
+                hook govern_feat_create
+            }
+        }
+
+        remove {
+            govern string:govern_name {
+                hook govern_remove
+            }
+
+            govern_feature string:govern_name string:feature_name {
+                hook govern_feat_remove
+            }
         }
 
         get {
@@ -66,6 +94,10 @@ governs {
         list {
             governs {
                 hook governs_get_all
+            }
+
+            govern_features string:govern_name {
+                hook govern_feat_get_all
             }
         }
     }
