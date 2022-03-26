@@ -23,6 +23,15 @@ public class Govern {
     @DatabaseField
     private boolean approve = false;
 
+    @DatabaseField
+    private int base_x;
+
+    @DatabaseField
+    private int base_y;
+
+    @DatabaseField
+    private int base_z;
+
 //    ORMLite boilerplate
     public Govern() {}
 
@@ -66,5 +75,29 @@ public class Govern {
 
     public void setApprove(boolean approve) {
         this.approve = approve;
+    }
+
+    public void setBaseX(int base_x) {
+        this.base_x = base_x;
+    }
+
+    public void setBaseY(int base_y) {
+        this.base_y = base_y;
+    }
+
+    public void setBaseZ(int base_z) {
+        this.base_z = base_z;
+    }
+
+    public int getBaseX() {
+        return base_x;
+    }
+
+    public int getBaseY() {
+        return base_y;
+    }
+
+    public int getBaseZ() {
+        return base_z;
     }
 }

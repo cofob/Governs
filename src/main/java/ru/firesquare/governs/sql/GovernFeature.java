@@ -11,7 +11,7 @@ public class GovernFeature {
     @DatabaseField(id = true)
     private String name;
 
-    @DatabaseField()
+    @DatabaseField(canBeNull = false)
     private String govern;
 
     @DatabaseField(canBeNull = false)

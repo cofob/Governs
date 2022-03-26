@@ -20,6 +20,7 @@ import ru.firesquare.governs.listeners.PlayerLeaveSpawnListener;
 import ru.firesquare.governs.sql.Govern;
 import ru.firesquare.governs.sql.GovernFeature;
 import ru.firesquare.governs.sql.Player;
+import ru.firesquare.governs.tasks.RememberJoinGovernTask;
 
 import java.sql.SQLException;
 
@@ -52,9 +53,9 @@ public class GovernsPlugin extends JavaPlugin {
         // Setup Vault
         setupPermissions();
 
-        // Register the example task
-//        final long taskRepeatEvery = this.getConfig().getInt("task-repeat-every") * 20L;
-//        this.getServer().getScheduler().runTaskTimer(this, new ExampleTask(), taskRepeatEvery, taskRepeatEvery);
+        // Register tasks
+        final long taskRepeatEvery = Messages.join_remember_retry_every * 20L;
+        this.getServer().getScheduler().runTaskTimer(this, new RememberJoinGovernTask(), taskRepeatEvery, taskRepeatEvery);
     }
 
     private Dao<Govern, String> governDao;

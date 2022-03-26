@@ -24,7 +24,7 @@ public class JoinGovernMenu implements InventoryProvider {
             .id("JoinGovern")
             .provider(new JoinGovernMenu())
             .size(3, 9)
-            .title(ChatColor.translateAlternateColorCodes('&', Messages.join_govern_title))
+            .title(ChatColor.translateAlternateColorCodes('&', Messages.join_govern_gui_title))
             .closeable(true)
             .build();
 
@@ -42,7 +42,7 @@ public class JoinGovernMenu implements InventoryProvider {
                 meta.setLore(Arrays.stream(govern.getDescription().split("%n"))
                         .map(e -> ChatColor.translateAlternateColorCodes('&', e)).collect( Collectors.toList() ));
                 item.setItemMeta(meta);
-                contents.set(1, i, ClickableItem.of(item, e -> player.closeInventory()));
+                contents.set(1, i, ClickableItem.of(item, e -> GovernFeatsMenu.build(govern.getName()).open(player)));
                 i += 1;
             }
         } catch (SQLException e) {
@@ -51,15 +51,5 @@ public class JoinGovernMenu implements InventoryProvider {
     }
 
     @Override
-    public void update(Player player, InventoryContents contents) {
-        int state = contents.property("state", 0);
-        contents.setProperty("state", state + 1);
-
-        if(state % 5 != 0)
-            return;
-
-        ItemStack glass = new ItemStack(Material.BLACK_STAINED_GLASS_PANE, 1);
-        contents.fillBorders(ClickableItem.empty(glass));
-    }
-
+    public void update(Player player, InventoryContents contents) {}
 }

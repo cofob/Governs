@@ -22,6 +22,14 @@ public class GovernsCommand {
     public void joinGovern(CommandSender sender) {
         Player player = sender.getServer().getPlayer(sender.getName());
         assert player != null;
+        try {
+            if (GovernsPlugin.getInstance().getPlayerDao().queryForId(player.getName()).getGovern() != null) {
+                player.sendMessage(ChatColor.translateAlternateColorCodes('&', Messages.already_in_govern));
+                return;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         JoinGovernMenu.INVENTORY.open(player);
     }
 
@@ -89,7 +97,7 @@ public class GovernsCommand {
             where.eq("name", feature_name);
             PreparedQuery<GovernFeature> preparedQuery = qb.prepare();
             GovernFeature govern = GovernsPlugin.getInstance().getGovernFeatureDao().queryForFirst(preparedQuery);
-            govern.setDisplayName(value);
+            govern.setDescription(value);
             GovernsPlugin.getInstance().getGovernFeatureDao().update(govern);
             sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Messages.success));
         } catch (SQLException e) {
@@ -188,6 +196,22 @@ public class GovernsCommand {
         }
     }
 
+    @CommandHook("govern_set_base")
+    public void governSetBase(CommandSender sender, String govern_name, int x, int y, int z){
+        try {
+            Govern govern = GovernsPlugin.getInstance().getGovernDao().queryForId(govern_name);
+            govern.setBaseX(x);
+            govern.setBaseY(y);
+            govern.setBaseZ(z);
+            GovernsPlugin.getInstance().getGovernDao().update(govern);
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Messages.success));
+        } catch (SQLException e) {
+            e.printStackTrace();
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Messages.error) +
+                    e.getMessage().replace('\n', ' '));
+        }
+    }
+
     @CommandHook("govern_create")
     public void governCreate(CommandSender sender, String govern_name){
         Govern govern = new Govern();
@@ -196,6 +220,9 @@ public class GovernsCommand {
         govern.setApprove(false);
         govern.setIcon("STONE_AXE");
         govern.setDisplayName(govern_name);
+        govern.setBaseX(0);
+        govern.setBaseY(80);
+        govern.setBaseZ(0);
         try {
             GovernsPlugin.getInstance().getGovernDao().create(govern);
             sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Messages.success));
@@ -209,7 +236,13 @@ public class GovernsCommand {
     @CommandHook("govern_remove")
     public void governRemove(CommandSender sender, String govern_name){
         try {
+            QueryBuilder<GovernFeature, String> qb = GovernsPlugin.getInstance().getGovernFeatureDao().queryBuilder();
+            Where<GovernFeature, String> where = qb.where();
+            where.eq("govern", govern_name);
+            PreparedQuery<GovernFeature> preparedQuery = qb.prepare();
+            List<GovernFeature> feats = GovernsPlugin.getInstance().getGovernFeatureDao().query(preparedQuery);
             GovernsPlugin.getInstance().getGovernDao().deleteById(govern_name);
+            GovernsPlugin.getInstance().getGovernFeatureDao().delete(feats);
             sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Messages.success));
         } catch (SQLException e) {
             e.printStackTrace();
@@ -221,7 +254,7 @@ public class GovernsCommand {
     @CommandHook("govern_feat_create")
     public void governFeatureCreate(CommandSender sender, String govern_name, String feature_name){
         try {
-            GovernsPlugin.getInstance().getGovernDao().queryForId(govern_name);
+            assert GovernsPlugin.getInstance().getGovernDao().queryForId(govern_name) != null;
         } catch (SQLException e) {
             e.printStackTrace();
             sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Messages.error) +
@@ -230,7 +263,7 @@ public class GovernsCommand {
         }
         GovernFeature govern = new GovernFeature();
         govern.setGovern(govern_name);
-        govern.setName(govern_name);
+        govern.setName(feature_name);
         govern.setDisplayName(govern_name);
         govern.setDescription("");
         govern.setIcon("STONE_AXE");
