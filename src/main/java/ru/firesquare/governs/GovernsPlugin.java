@@ -6,6 +6,7 @@ import com.j256.ormlite.jdbc.JdbcConnectionSource;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 import net.milkbowl.vault.permission.Permission;
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 import redempt.redlib.commandmanager.CommandParser;
@@ -15,6 +16,7 @@ import redempt.redlib.dev.StructureTool;
 import ru.firesquare.governs.commands.GovernsCommand;
 import ru.firesquare.governs.config.Config;
 import ru.firesquare.governs.config.Messages;
+import ru.firesquare.governs.expansions.PlayerGovernExpansion;
 import ru.firesquare.governs.listeners.PlayerJoinListener;
 import ru.firesquare.governs.listeners.PlayerLeaveSpawnListener;
 import ru.firesquare.governs.sql.Govern;
@@ -56,6 +58,11 @@ public class GovernsPlugin extends JavaPlugin {
         // Register tasks
         final long taskRepeatEvery = Messages.join_remember_retry_every * 20L;
         this.getServer().getScheduler().runTaskTimer(this, new RememberJoinGovernTask(), taskRepeatEvery, taskRepeatEvery);
+
+        // Register PAPI expansions
+        if(Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
+            new PlayerGovernExpansion().register();
+        }
     }
 
     private Dao<Govern, String> governDao;
