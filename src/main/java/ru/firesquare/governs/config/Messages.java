@@ -41,4 +41,5 @@ public class Messages {
             "Display Name: %display_name%\n" +
             "Description: %description%\n" +
             "Icon: %icon%";
+    public static String clan_chat = "<%govern%:%player%> %message%";
 }

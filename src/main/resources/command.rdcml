@@ -115,3 +115,7 @@ governs {
         }
     }
 }
+
+clan,clanchat string...:message {
+    hook clan_chat
+}

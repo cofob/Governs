@@ -3,6 +3,7 @@ package ru.firesquare.governs.commands;
 import com.j256.ormlite.stmt.PreparedQuery;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.stmt.Where;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -14,8 +15,10 @@ import ru.firesquare.governs.sql.Govern;
 import ru.firesquare.governs.sql.GovernFeature;
 
 import java.sql.SQLException;
+import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 public class GovernsCommand {
     @CommandHook("join")
@@ -382,6 +385,38 @@ public class GovernsCommand {
         } catch (Exception e) {
             sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Messages.error) +
                     e.getMessage().replace('\n', ' '));
+        }
+    }
+
+    @CommandHook("clan_chat")
+    public void clanChat(CommandSender sender, String message){
+        Collection<? extends Player> players = Bukkit.getServer().getOnlinePlayers();
+
+        ru.firesquare.governs.sql.Player sender_db;
+        try {
+            sender_db = GovernsPlugin.getInstance().getPlayerDao().queryForId(sender.getName());
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return;
+        }
+
+        String rendered_message = ChatColor.translateAlternateColorCodes('&', Messages.clan_chat)
+                .replaceAll("%govern%", sender_db.getGovern())
+                .replaceAll("%player%", sender.getName())
+                .replaceAll("%message%", message);
+
+        for(Player player : players) {
+            ru.firesquare.governs.sql.Player player_db;
+            try {
+                player_db = GovernsPlugin.getInstance().getPlayerDao().queryForId(player.getName());
+            } catch (SQLException e) {
+                e.printStackTrace();
+                continue;
+            }
+
+            if(Objects.equals(player_db.getGovern(), sender_db.getGovern())) {
+                player.sendMessage(rendered_message);
+            }
         }
     }
 }
