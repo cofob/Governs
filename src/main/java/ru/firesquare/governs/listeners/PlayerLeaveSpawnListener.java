@@ -34,10 +34,7 @@ public class PlayerLeaveSpawnListener implements Listener {
         new EventListener<>(GovernsPlugin.getInstance(), RegionExitEvent.class, e -> {
             try {
                 if (GovernsPlugin.getInstance().getPlayerDao().queryForId(e.getPlayer().getName()).getGovern() == null) {
-                    e.getPlayer().teleport(Objects.requireNonNull(Bukkit.getWorld("world")).getSpawnLocation());
-                    e.getPlayer().sendTitle(ChatUtils.translate(Messages.join_govern_title),
-                            ChatUtils.translate(Messages.join_govern_subtitle),
-                            Messages.join_govern_fade_in, Messages.join_govern_stay, Messages.join_govern_fade_out);
+                    PlayerJoinListener.processPlayerWithoutGovern(e.getPlayer());
                 }
             } catch (SQLException ex) {
                 ex.printStackTrace();

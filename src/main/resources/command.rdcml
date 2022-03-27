@@ -4,13 +4,12 @@ governs {
         hook join
     }
 
-    reload {
-        permission governs.reload
-        hook reload
-    }
-
     manage {
         permission governs.admin
+
+        reload {
+            hook reload
+        }
 
         set {
             govern string:govern_name {
@@ -120,6 +119,12 @@ governs {
     }
 }
 
-clan,clanchat string...:message {
-    hook clan_chat
+clan,clanchat,cc string...:message {
+    permission governs.chat
+    hook govern_chat
+}
+
+join {
+    permission governs.join
+    hook join
 }

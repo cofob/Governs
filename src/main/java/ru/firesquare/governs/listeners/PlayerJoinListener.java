@@ -2,6 +2,7 @@ package ru.firesquare.governs.listeners;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.GameMode;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -32,11 +33,17 @@ public class PlayerJoinListener implements Listener {
         }
 
         if (player.getGovern() == null) {
-            e.getPlayer().teleport(Objects.requireNonNull(Bukkit.getWorld("world")).getSpawnLocation());
-            e.getPlayer().setBedSpawnLocation(Objects.requireNonNull(Bukkit.getWorld("world")).getSpawnLocation());
-            e.getPlayer().sendTitle(ChatUtils.translate(Messages.join_govern_title),
-                    ChatUtils.translate(Messages.join_govern_subtitle),
-                    Messages.join_govern_fade_in, Messages.join_govern_stay, Messages.join_govern_fade_out);
+            processPlayerWithoutGovern(e.getPlayer());
         }
+    }
+
+    public static void processPlayerWithoutGovern(org.bukkit.entity.Player player) {
+        player.teleport(Objects.requireNonNull(Bukkit.getWorld("world")).getSpawnLocation());
+        player.setBedSpawnLocation(Objects.requireNonNull(Bukkit.getWorld("world")).getSpawnLocation());
+        player.sendTitle(ChatUtils.translate(Messages.join_govern_title),
+                ChatUtils.translate(Messages.join_govern_subtitle),
+                Messages.join_govern_fade_in, Messages.join_govern_stay, Messages.join_govern_fade_out);
+        player.setGameMode(GameMode.ADVENTURE);
+        player.setFoodLevel(20);
     }
 }

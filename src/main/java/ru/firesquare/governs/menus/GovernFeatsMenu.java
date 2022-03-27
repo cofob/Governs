@@ -10,6 +10,7 @@ import fr.minuskube.inv.content.InventoryProvider;
 import net.luckperms.api.model.user.User;
 import net.luckperms.api.node.Node;
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -72,10 +73,9 @@ public class GovernFeatsMenu implements InventoryProvider {
             ItemMeta meta = item.getItemMeta();
             assert meta != null;
             meta.setDisplayName(feat.getDisplayName());
-            meta.setLore(Arrays.stream(feat.getDescription().split("%n"))
-                    .map(ChatUtils::translate).collect( Collectors.toList() ));
+            meta.setLore(Arrays.stream(feat.getDescription().split("%n")).toList());
             item.setItemMeta(meta);
-            contents.set(feat.getY(), feat.getX(), ClickableItem.of(item, e -> player.closeInventory()));
+            contents.set(feat.getY(), feat.getX(), ClickableItem.empty(item));
         }
 
         // Create buttons
@@ -101,6 +101,7 @@ public class GovernFeatsMenu implements InventoryProvider {
                 player.sendTitle(ChatUtils.translate(Messages.joined_title),
                         ChatUtils.translate(Messages.joined_subtitle),
                         Messages.joined_fade_in, Messages.joined_stay, Messages.joined_fade_out);
+                player.setGameMode(GameMode.SURVIVAL);
             } catch (SQLException ex) {
                 ex.printStackTrace();
                 player.sendMessage(ChatUtils.translate(Messages.error + "Failed to join!"));

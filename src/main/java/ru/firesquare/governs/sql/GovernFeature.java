@@ -53,7 +53,7 @@ public class GovernFeature {
     }
 
     public void setDisplayName(String display_name) {
-        this.display_name = name;
+        this.display_name = display_name;
     }
 
     public String getDescription() {

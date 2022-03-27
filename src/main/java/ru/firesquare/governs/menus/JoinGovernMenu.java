@@ -4,7 +4,6 @@ import fr.minuskube.inv.ClickableItem;
 import fr.minuskube.inv.SmartInventory;
 import fr.minuskube.inv.content.InventoryContents;
 import fr.minuskube.inv.content.InventoryProvider;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -17,7 +16,6 @@ import ru.firesquare.governs.utils.ChatUtils;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 public class JoinGovernMenu implements InventoryProvider {
 
@@ -40,8 +38,7 @@ public class JoinGovernMenu implements InventoryProvider {
                 ItemMeta meta = item.getItemMeta();
                 assert meta != null;
                 meta.setDisplayName(govern.getDisplayName());
-                meta.setLore(Arrays.stream(govern.getDescription().split("%n"))
-                        .map(e -> ChatUtils.translate(e)).collect( Collectors.toList() ));
+                meta.setLore(Arrays.stream(govern.getDescription().split("%n")).toList());
                 item.setItemMeta(meta);
                 contents.set(1, i, ClickableItem.of(item, e -> GovernFeatsMenu.build(govern.getName()).open(player)));
                 i += 1;

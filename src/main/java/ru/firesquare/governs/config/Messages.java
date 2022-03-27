@@ -13,7 +13,7 @@ public class Messages {
     public static String back_button_item = "RED_STAINED_GLASS_PANE";
     public static String join_govern_gui_title = "&aGovern choice";
     public static String join_govern_title = "&aGovern choice";
-    public static String join_govern_subtitle = "&a/governs join";
+    public static String join_govern_subtitle = "&a/join";
     public static int join_govern_fade_in = 20;
     public static int join_govern_stay = 80;
     public static int join_govern_fade_out = 20;

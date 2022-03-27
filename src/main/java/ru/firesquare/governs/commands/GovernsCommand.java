@@ -10,6 +10,7 @@ import org.bukkit.entity.Player;
 import redempt.redlib.commandmanager.CommandHook;
 import ru.firesquare.governs.config.Messages;
 import ru.firesquare.governs.GovernsPlugin;
+import ru.firesquare.governs.listeners.PlayerJoinListener;
 import ru.firesquare.governs.menus.JoinGovernMenu;
 import ru.firesquare.governs.sql.Govern;
 import ru.firesquare.governs.sql.GovernFeature;
@@ -47,7 +48,7 @@ public class GovernsCommand {
     public void governSetDescription(CommandSender sender, String govern_name, String value){
         try {
             Govern govern = GovernsPlugin.getInstance().getGovernDao().queryForId(govern_name);
-            govern.setDescription(value);
+            govern.setDescription(ChatUtils.translate(value));
             GovernsPlugin.getInstance().getGovernDao().update(govern);
             sender.sendMessage(ChatUtils.translate(Messages.success));
         } catch (SQLException e) {
@@ -61,7 +62,7 @@ public class GovernsCommand {
     public void governSetDisplayName(CommandSender sender, String govern_name, String value){
         try {
             Govern govern = GovernsPlugin.getInstance().getGovernDao().queryForId(govern_name);
-            govern.setDisplayName(value);
+            govern.setDisplayName(ChatUtils.translate(value));
             GovernsPlugin.getInstance().getGovernDao().update(govern);
             sender.sendMessage(ChatUtils.translate(Messages.success));
         } catch (SQLException e) {
@@ -81,7 +82,7 @@ public class GovernsCommand {
             where.eq("name", feature_name);
             PreparedQuery<GovernFeature> preparedQuery = qb.prepare();
             GovernFeature govern = GovernsPlugin.getInstance().getGovernFeatureDao().queryForFirst(preparedQuery);
-            govern.setDisplayName(value);
+            govern.setDisplayName(ChatUtils.translate(value));
             GovernsPlugin.getInstance().getGovernFeatureDao().update(govern);
             sender.sendMessage(ChatUtils.translate(Messages.success));
         } catch (SQLException e) {
@@ -101,7 +102,7 @@ public class GovernsCommand {
             where.eq("name", feature_name);
             PreparedQuery<GovernFeature> preparedQuery = qb.prepare();
             GovernFeature govern = GovernsPlugin.getInstance().getGovernFeatureDao().queryForFirst(preparedQuery);
-            govern.setDescription(value);
+            govern.setDescription(ChatUtils.translate(value));
             GovernsPlugin.getInstance().getGovernFeatureDao().update(govern);
             sender.sendMessage(ChatUtils.translate(Messages.success));
         } catch (SQLException e) {
@@ -395,13 +396,15 @@ public class GovernsCommand {
             ru.firesquare.governs.sql.Player player1 = GovernsPlugin.getInstance().getPlayerDao().queryForId(player.getName());
             player1.setGovern(null);
             GovernsPlugin.getInstance().getPlayerDao().update(player1);
+            PlayerJoinListener.processPlayerWithoutGovern(player);
+            sender.sendMessage(ChatUtils.translate(Messages.success));
         } catch (Exception e) {
             sender.sendMessage(ChatUtils.translate(Messages.error) +
                     e.getMessage().replace('\n', ' '));
         }
     }
 
-    @CommandHook("clan_chat")
+    @CommandHook("govern_chat")
     public void clanChat(CommandSender sender, String message){
         Collection<? extends Player> players = Bukkit.getServer().getOnlinePlayers();
 
