@@ -39,9 +39,9 @@ public class PlayerGovernExpansion extends PlaceholderExpansion {
                 govern = GovernsPlugin.getInstance().getGovernDao().queryForId(player_db.getGovern());
             } catch (SQLException e) {
                 e.printStackTrace();
-                return null;
+                return "";
             }
-            return player_db.getGovern() == null ? null : ChatUtils.translate(govern.getDisplayName()); // "name" requires the player to be valid
+            return player_db.getGovern() == null ? "" : ChatUtils.translate(govern.getDisplayName());
         }
 
         return null;
