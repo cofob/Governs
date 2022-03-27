@@ -17,4 +17,7 @@ public class Config {
 
     @Comment("Database connection")
     public static String database = "jdbc:sqlite:plugins/Governs/database.db";
+
+    public static boolean enable_gui_stroke = true;
+    public static String gui_stroke_item = "BLACK_STAINED_GLASS_PANE";
 }

@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import ru.firesquare.governs.GovernsPlugin;
+import ru.firesquare.governs.config.Config;
 import ru.firesquare.governs.config.Messages;
 import ru.firesquare.governs.sql.Govern;
 import ru.firesquare.governs.utils.ChatUtils;
@@ -29,7 +30,11 @@ public class JoinGovernMenu implements InventoryProvider {
 
     @Override
     public void init(Player player, InventoryContents contents) {
-        contents.fillBorders(ClickableItem.empty(new ItemStack(Material.BLACK_STAINED_GLASS_PANE)));
+        if (Config.enable_gui_stroke) {
+            contents.fillBorders(ClickableItem.empty(new ItemStack(
+                    Objects.requireNonNull(Material.getMaterial(Config.gui_stroke_item))
+            )));
+        }
 
         int i = 1;
         try {
